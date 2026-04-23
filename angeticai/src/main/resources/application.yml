@@ -1,0 +1,46 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /angeticai
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+ollama:
+  base-url: http://localhost:11434
+  model: gemma3:12b
+  # Embedding model used for vector indexing — run: ollama pull nomic-embed-text
+  embedding-model: nomic-embed-text
+  timeout: 120
+
+local:
+  spreadsheets:
+    # Folder containing your downloaded Google Sheet files (.xlsx and/or .csv)
+    folder: C:/google_sheets
+
+pdf:
+  documents:
+    # Folder containing your PDF documents to search
+    folder: C:/hemant/personal/documents
+
+openai:
+  api-key: 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
+  model: gpt-4o-mini
+  embedding-model: text-embedding-3-small
+  timeout: 120
+
+#http://localhost:8082/springboot-sample-app/swagger-ui/index.html
+#/springboot-sample-app/v3/api-docs
+#url: jdbc:postgresql://192.168.1.243:5432/postgres
