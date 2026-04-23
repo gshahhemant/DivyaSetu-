@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Delete API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        .get-btn {
+            background-color: #007bff;
+        }
+        .get-btn:hover {
+            background-color: #0056b3;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 100px;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Delete API Endpoints</h1>
+    
+    <!-- Test Hosts -->
+    <div class="section">
+        <h2>Delete Vrati Host</h2>
+        <button class="get-btn" onclick="getHosts()">Get All Hosts</button>
+        <div id="hostsList" class="result"></div>
+        <br>
+        <input type="number" id="hostId" placeholder="Host Sr No">
+        <button onclick="deleteHost()">Delete Host</button>
+        <div id="hostResult" class="result"></div>
+    </div>
+
+    <!-- Test Schedules -->
+    <div class="section">
+        <h2>Delete Vrati Schedule</h2>
+        <button class="get-btn" onclick="getSchedules()">Get All Schedules</button>
+        <div id="schedulesList" class="result"></div>
+        <br>
+        <input type="number" id="scheduleId" placeholder="Schedule Sr No">
+        <button onclick="deleteSchedule()">Delete Schedule</button>
+        <div id="scheduleResult" class="result"></div>
+    </div>
+
+    <!-- Test Families -->
+    <div class="section">
+        <h2>Delete Vrati Family</h2>
+        <button class="get-btn" onclick="getFamilies()">Get All Families</button>
+        <div id="familiesList" class="result"></div>
+        <br>
+        <input type="number" id="familyId" placeholder="Family Sr No">
+        <button onclick="deleteFamily()">Delete Family</button>
+        <div id="familyResult" class="result"></div>
+    </div>
+
+    <!-- Test Mappings -->
+    <div class="section">
+        <h2>Delete Schedule Mapping</h2>
+        <input type="number" id="mappingScheduleId" placeholder="Schedule Sr No">
+        <input type="number" id="mappingHostId" placeholder="Host Sr No">
+        <input type="number" id="mappingFamilyId" placeholder="Family Sr No">
+        <button onclick="deleteMapping()">Delete Mapping</button>
+        <div id="mappingResult" class="result"></div>
+    </div>
+
+    <script>
+        const BASE_URL = '/divyasetu/api/vratin';
+
+        // Get all hosts
+        function getHosts() {
+            fetch(`${BASE_URL}/hosts`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('hostsList').innerHTML = 
+                        '<strong>Hosts:</strong>\n' + JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('hostsList').innerHTML = 
+                        '<span class="error">Error: ' + error + '</span>';
+                });
+        }
+
+        // Get all schedules
+        function getSchedules() {
+            fetch(`${BASE_URL}/schedules`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('schedulesList').innerHTML = 
+                        '<strong>Schedules:</strong>\n' + JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('schedulesList').innerHTML = 
+                        '<span class="error">Error: ' + error + '</span>';
+                });
+        }
+
+        // Get all families
+        function getFamilies() {
+            fetch(`${BASE_URL}/families`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('familiesList').innerHTML = 
+                        '<strong>Families:</strong>\n' + JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('familiesList').innerHTML = 
+                        '<span class="error">Error: ' + error + '</span>';
+                });
+        }
+
+        // Delete host
+        function deleteHost() {
+            const id = document.getElementById('hostId').value;
+            if (!id) {
+                alert('Please enter Host Sr No');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete Host ${id}?`)) {
+                return;
+            }
+
+            console.log('Deleting host:', id);
+            
+            fetch(`${BASE_URL}/hosts/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                document.getElementById('hostResult').innerHTML = 
+                    '<span class="success">✓ ' + data + '</span>';
+                // Refresh the list
+                setTimeout(() => getHosts(), 500);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('hostResult').innerHTML = 
+                    '<span class="error">✗ Error: ' + error + '</span>';
+            });
+        }
+
+        // Delete schedule
+        function deleteSchedule() {
+            const id = document.getElementById('scheduleId').value;
+            if (!id) {
+                alert('Please enter Schedule Sr No');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete Schedule ${id}?`)) {
+                return;
+            }
+
+            console.log('Deleting schedule:', id);
+            
+            fetch(`${BASE_URL}/schedules/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                document.getElementById('scheduleResult').innerHTML = 
+                    '<span class="success">✓ ' + data + '</span>';
+                // Refresh the list
+                setTimeout(() => getSchedules(), 500);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('scheduleResult').innerHTML = 
+                    '<span class="error">✗ Error: ' + error + '</span>';
+            });
+        }
+
+        // Delete family
+        function deleteFamily() {
+            const id = document.getElementById('familyId').value;
+            if (!id) {
+                alert('Please enter Family Sr No');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete Family ${id}?`)) {
+                return;
+            }
+
+            console.log('Deleting family:', id);
+            
+            fetch(`${BASE_URL}/families/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                document.getElementById('familyResult').innerHTML = 
+                    '<span class="success">✓ ' + data + '</span>';
+                // Refresh the list
+                setTimeout(() => getFamilies(), 500);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('familyResult').innerHTML = 
+                    '<span class="error">✗ Error: ' + error + '</span>';
+            });
+        }
+
+        // Delete mapping
+        function deleteMapping() {
+            const scheduleId = document.getElementById('mappingScheduleId').value;
+            const hostId = document.getElementById('mappingHostId').value;
+            const familyId = document.getElementById('mappingFamilyId').value;
+
+            if (!scheduleId || !hostId || !familyId) {
+                alert('Please enter all three IDs');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete Mapping (${scheduleId}/${hostId}/${familyId})?`)) {
+                return;
+            }
+
+            console.log('Deleting mapping:', scheduleId, hostId, familyId);
+            
+            fetch(`${BASE_URL}/mappings/${scheduleId}/${hostId}/${familyId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                document.getElementById('mappingResult').innerHTML = 
+                    '<span class="success">✓ ' + data + '</span>';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('mappingResult').innerHTML = 
+                    '<span class="error">✗ Error: ' + error + '</span>';
+            });
+        }
+
+        // Log all fetch requests for debugging
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+            console.log('Fetch called:', args);
+            return originalFetch.apply(this, args).then(response => {
+                console.log('Fetch response:', response);
+                return response;
+            });
+        };
+    </script>
+</body>
+</html>
