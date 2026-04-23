@@ -1,0 +1,664 @@
+.vratin-schedule-container {
+  padding: 10px 20px 20px 20px;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Host label row with + button */
+.host-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-host-btn {
+  width: 24px;
+  height: 24px;
+  background: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.add-host-btn:hover {
+  background: #38a169;
+  transform: scale(1.1);
+}
+
+/* Add Host Modal */
+.add-host-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.add-host-modal {
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.add-host-modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-host-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.add-host-modal-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.add-host-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.add-host-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.add-host-field .required {
+  color: #e53e3e;
+}
+
+.add-host-input {
+  padding: 9px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-host-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102,126,234,0.15);
+}
+
+.add-host-error {
+  color: #e53e3e;
+  font-size: 13px;
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 5px;
+  padding: 7px 10px;
+}
+
+.add-host-modal-footer {
+  padding: 12px 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.add-host-cancel-btn {
+  padding: 8px 20px;
+  background: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-host-cancel-btn:hover {
+  background: #cbd5e0;
+}
+
+.add-host-save-btn {
+  padding: 8px 22px;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.add-host-save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(72,187,120,0.4);
+}
+
+.add-host-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.scheduler-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: #333;
+}
+
+.report-btn {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.report-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.back-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.back-btn {
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.back-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+.schedule-controls {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.control-group label {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.schedule-select-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.schedule-select {
+  flex: 1;
+}
+
+.view-schedule-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.2s;
+}
+
+.view-schedule-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.location-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #2196F3;
+}
+
+.location-icon-small {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.location-text-small {
+  font-size: 14px;
+  color: #1565c0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.schedule-select,
+.host-select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.save-btn {
+  padding: 10px 30px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
+.save-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.families-section,
+.mappings-section {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.families-section h3,
+.mappings-section h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.families-table-wrapper,
+.mappings-table-wrapper {
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.families-table,
+.mappings-table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.families-table thead,
+.mappings-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.families-table th,
+.mappings-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.families-table td,
+.mappings-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.family-name-col {
+  font-weight: 600;
+  color: #333;
+  width: auto;
+  min-width: 200px;
+}
+
+.action-col {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  width: auto;
+  white-space: nowrap;
+}
+
+.families-table tbody tr:hover,
+.mappings-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.mapped-row {
+  background-color: #e8f5e9;
+}
+
+.mapped-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.save-btn-inline {
+  padding: 8px 20px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.save-btn-inline:hover {
+  background-color: #0b7dda;
+}
+
+.save-btn-inline:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.delete-btn-inline {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s;
+  margin-left: 8px;
+}
+
+.delete-btn-inline:hover {
+  background-color: #da190b;
+}
+
+.delete-btn-inline:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.delete-btn {
+  padding: 6px 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #da190b;
+}
+
+@media screen and (max-width: 1200px) {
+  .vratin-schedule-container {
+    padding: 10px 15px 20px 15px;
+  }
+
+  .schedule-controls {
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .control-group {
+    min-width: 200px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .schedule-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .control-group {
+    min-width: 100%;
+  }
+
+  .schedule-select-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-schedule-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .vratin-schedule-container {
+    padding: 8px 10px 15px 10px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .report-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .back-btn-container {
+    margin-bottom: 8px;
+  }
+
+  .back-btn {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  .schedule-controls {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .control-group label {
+    font-size: 13px;
+  }
+
+  .schedule-select,
+  .host-select {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .view-schedule-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .location-info-bar {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .families-section h3,
+  .mappings-section h3 {
+    font-size: 18px;
+  }
+
+  .families-table,
+  .mappings-table {
+    font-size: 13px;
+  }
+
+  .families-table th,
+  .families-table td,
+  .mappings-table th,
+  .mappings-table td {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+
+  .action-col {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .save-btn-inline,
+  .delete-btn-inline {
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .delete-btn-inline {
+    margin-left: 0;
+  }
+
+  .mapped-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .vratin-schedule-container {
+    padding: 5px 8px 12px 8px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .report-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .back-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .schedule-controls {
+    padding: 10px;
+  }
+
+  .families-table,
+  .mappings-table {
+    font-size: 12px;
+  }
+
+  .families-table th,
+  .families-table td,
+  .mappings-table th,
+  .mappings-table td {
+    padding: 6px 4px;
+    font-size: 12px;
+  }
+
+  .save-btn-inline,
+  .delete-btn-inline {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .mapped-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
